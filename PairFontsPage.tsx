@@ -579,7 +579,7 @@ export function PairFontsPage() {
             {/* Font Selection Status */}
             <div className="mb-4 space-y-2">
               <div className="text-sm">
-                <span className="text-neutral-600 dark:text-neutral-400">Heading Font:</span>
+                <span className="text-neutral-600 dark:text-neutral-400">Heading Font:{' '}</span>
                 <span className={selectedHeadingFont
                   ? 'text-green-600 dark:text-green-400'
                   : 'text-neutral-500 dark:text-neutral-400'}
@@ -588,7 +588,7 @@ export function PairFontsPage() {
                 </span>
               </div>
               <div className="text-sm">
-                <span className="text-neutral-600 dark:text-neutral-400">Body Font:</span>
+                <span className="text-neutral-600 dark:text-neutral-400">Body Font:{' '}</span>
                 <span className={selectedBodyFont
                   ? 'text-green-600 dark:text-green-400'
                   : 'text-neutral-500 dark:text-neutral-400'}
@@ -630,7 +630,6 @@ export function PairFontsPage() {
               <li>2. Click a font in the "Body Fonts" list to select it</li>
               <li>3. Use W/S keys to navigate heading fonts</li>
               <li>4. Use E/D arrow keys to navigate body fonts</li>
-              <li>5. See how they look together in the sample text</li>
             </ol>
           </div>
         </div>
