@@ -679,6 +679,14 @@ export function PairFontsPage() {
               <li>2. Click a font in the "Body Fonts" list to select it</li>
               <li>3. Use W/S keys to navigate heading fonts</li>
               <li>4. Use E/D arrow keys to navigate body fonts</li>
+              <li>
+                5.{' '}
+                <a href="https://buymeacoffee.com/stagas" target="_blank" rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                >
+                  Buy me a coffee
+                </a>
+              </li>
             </ol>
           </div>
         </div>
