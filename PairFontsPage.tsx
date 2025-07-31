@@ -39,11 +39,52 @@ export function PairFontsPage() {
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [isUserScrollingHeading, setIsUserScrollingHeading] = useState(false)
   const [isUserScrollingBody, setIsUserScrollingBody] = useState(false)
+  const [copySuccess, setCopySuccess] = useState(false)
   const fontsPerLoad = 20
   const headingScrollContainerRef = useRef<HTMLDivElement>(null)
   const bodyScrollContainerRef = useRef<HTMLDivElement>(null)
   const headingScrollTimeoutRef = useRef<number | null>(null)
   const bodyScrollTimeoutRef = useRef<number | null>(null)
+
+  // Function to generate Google Fonts link tags
+  const generateLinkTags = useCallback(() => {
+    const fonts = []
+
+    if (selectedHeadingFont) {
+      fonts.push(selectedHeadingFont.replace(/\s+/g, '+'))
+    }
+
+    if (selectedBodyFont && selectedBodyFont !== selectedHeadingFont) {
+      fonts.push(selectedBodyFont.replace(/\s+/g, '+'))
+    }
+
+    if (fonts.length === 0) {
+      return ''
+    }
+
+    const fontString = fonts.join('&family=')
+    return `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=${fontString}:wght@400;700&display=swap" rel="stylesheet">`
+  }, [selectedHeadingFont, selectedBodyFont])
+
+  // Function to copy link tags to clipboard
+  const copyLinkTags = useCallback(async () => {
+    const linkTags = generateLinkTags()
+
+    if (!linkTags) {
+      alert('Please select at least one font first')
+      return
+    }
+
+    try {
+      await navigator.clipboard.writeText(linkTags)
+      setCopySuccess(true)
+      setTimeout(() => setCopySuccess(false), 2000)
+    }
+    catch (err) {
+      console.error('Failed to copy to clipboard:', err)
+      alert('Failed to copy to clipboard')
+    }
+  }, [generateLinkTags])
 
   // Function to load a Google Font
   const loadGoogleFont = useCallback(async (fontFamily: string, fontFiles: Record<string, string>) => {
@@ -574,7 +615,15 @@ export function PairFontsPage() {
         {/* Left Column - Sample Text */}
         <div className="space-y-6 lg:sticky lg:top-4 lg:self-start max-h-full overflow-y-auto">
           <div className="bg-white dark:bg-neutral-800 rounded-lg p-6 border border-neutral-200 dark:border-neutral-700">
-            <h2 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">Sample Text</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">Sample Text</h2>
+              <button
+                onClick={copyLinkTags}
+                className="px-3 py-1.5 text-blue-600 dark:text-blue-400 text-sm hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors"
+              >
+                {copySuccess ? 'Copied!' : 'Copy Link Rel'}
+              </button>
+            </div>
 
             {/* Font Selection Status */}
             <div className="mb-4 space-y-2">
